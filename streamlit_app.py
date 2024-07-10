@@ -1,15 +1,20 @@
 import streamlit as st
-from pathlib import Path
+import requests
 
-# 目標文件夾路徑
-target_dir = Path("I:/python/新版網頁/意見收集網頁")
+# 设置 Streamlit 的文件上传器
+uploaded_file = st.file_uploader("上传音频文件", type=["wav", "mp3"])
 
-# 確保目標文件夾存在，如果不存在則創建它
-target_dir.mkdir(parents=True, exist_ok=True)
+if uploaded_file is not None:
+    # 保存文件到临时位置
+    temp_file_path = f"/tmp/{uploaded_file.name}"
+    with open(temp_file_path, "wb") as f:
+        f.write(uploaded_file.getvalue())
 
-# 列出目標文件夾中的所有文件和文件夾
-files_in_target_dir = [item.name for item in target_dir.iterdir()]
+    # 通过 API 将文件上传到桌机
+    files = {'file': open(temp_file_path, 'rb')}
+    response = requests.post("http://10.90.98.131:5000/upload", files=files)
 
-# 顯示在目標文件夾中找到的所有文件和文件夾名稱
-for file_name in files_in_target_dir:
-    st.write(file_name)
+    if response.status_code == 200:
+        st.success(f"成功保存文件：{uploaded_file.name}")
+    else:
+        st.error("文件上传失败")
