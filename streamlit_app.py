@@ -12,7 +12,7 @@ if uploaded_file is not None:
 
     # 通过 API 将文件上传到桌机
     files = {'file': open(temp_file_path, 'rb')}
-    response = requests.post("http://10.90.98.131:5000/upload", files=files)
+    response = requests.post("http://192.168.68.110:5000/upload", files=files)
 
     if response.status_code == 200:
         st.success(f"成功保存文件：{uploaded_file.name}")
