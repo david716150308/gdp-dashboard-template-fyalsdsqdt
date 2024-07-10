@@ -15,7 +15,9 @@ if uploaded_file is not None:
 
     # 保存文件到目標文件夾
     target_path = target_dir / filename
-    with open(target_path, "wb") as f:
-        f.write(uploaded_file.getvalue())
-
-    st.success(f"成功保存文件：{filename} 到 {target_path}")
+    try:
+        with open(target_path, "wb") as f:
+            f.write(uploaded_file.getvalue())
+        st.success(f"成功保存文件：{filename} 到 {target_path}")
+    except Exception as e:
+        st.error(f"保存文件時出現錯誤：{e}")
