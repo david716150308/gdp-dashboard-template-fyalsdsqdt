@@ -1,24 +1,15 @@
 import streamlit as st
-import os
 from pathlib import Path
 
-# 設置 Streamlit 的文件上傳器
-uploaded_file = st.file_uploader("上傳音頻文件", type=["wav", "mp3"])
+# 目標文件夾路徑
+target_dir = Path("I:/python/新版網頁/意見收集網頁")
 
-if uploaded_file is not None:
-    # 確保目標文件夾存在，如果不存在則創建它
-    target_dir = Path("I:/python/新版網頁/意見收集網頁")
-    target_dir.mkdir(parents=True, exist_ok=True)
+# 確保目標文件夾存在，如果不存在則創建它
+target_dir.mkdir(parents=True, exist_ok=True)
 
-    # 獲取文件名
-    filename = uploaded_file.name
+# 列出目標文件夾中的所有文件和文件夾
+files_in_target_dir = [item.name for item in target_dir.iterdir()]
 
-    # 保存文件到目標文件夾
-    target_path = target_dir / filename
-    with open(target_path, "wb") as f:
-        f.write(uploaded_file.getvalue())
-
-    st.success(f"成功保存文件：{filename} 到 {target_path}")
-
-    # 打印目標文件的完整路徑
-    print(f"文件已保存到目標路徑：{target_path}")
+# 顯示在目標文件夾中找到的所有文件和文件夾名稱
+for file_name in files_in_target_dir:
+    st.write(file_name)
