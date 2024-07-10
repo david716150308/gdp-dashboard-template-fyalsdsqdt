@@ -15,9 +15,10 @@ if uploaded_file is not None:
 
     # 保存文件到目標文件夾
     target_path = target_dir / filename
-    try:
-        with open(target_path, "wb") as f:
-            f.write(uploaded_file.getvalue())
-        st.success(f"成功保存文件：{filename} 到 {target_path}")
-    except Exception as e:
-        st.error(f"保存文件時出現錯誤：{e}")
+    with open(target_path, "wb") as f:
+        f.write(uploaded_file.getvalue())
+
+    st.success(f"成功保存文件：{filename} 到 {target_path}")
+
+    # 打印目標文件的完整路徑
+    print(f"文件已保存到目標路徑：{target_path}")
