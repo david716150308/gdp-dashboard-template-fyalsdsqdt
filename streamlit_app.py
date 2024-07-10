@@ -17,7 +17,7 @@ if uploaded_file is not None:
     filename = uploaded_file.name
 
     # 保存文件到目標文件夾
-    target_path = "I:/python/新版網頁/意見收集網頁"+'/'+target_dir+'/'+ filename
+    target_path = "I:/python/新版網頁/意見收集網頁"
     with open(target_path, "wb") as f:
         f.write(uploaded_file.getvalue())
 
